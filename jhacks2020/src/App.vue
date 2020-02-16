@@ -6,7 +6,10 @@
 </template>
 
 <script>
+
 import HelloWorld from './components/HelloWorld.vue'
+
+import {ItemList} from './backend/ItemList.js'
 
 export default {
   name: 'app',
@@ -14,6 +17,14 @@ export default {
     HelloWorld
   }
 }
+
+
+
+var itemList = new ItemList();
+
+itemList.add("g",false,"g");
+console.log(itemList);
+
 </script>
 
 <style>
