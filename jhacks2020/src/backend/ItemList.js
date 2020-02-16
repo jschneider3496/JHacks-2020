@@ -1,13 +1,19 @@
 class ToDoItem {
-    constructor(name, status, notes) {
+    constructor(name, status, notes, weight) {
         this.name = name;
         this.status = status;
         this.notes = notes;
+        this.weight = weight;
     }
     print() {
         return this.name + " " + this.status  + " " + this.notes;
     }
+    getWeight() {
+        return this.weight;
+    }
 }
+
+export {ToDoItem}
 
 class Node { 
     // constructor 
@@ -16,6 +22,9 @@ class Node {
         this.element = element; 
         this.next = null
     } 
+    getElement(){
+        return this.element;
+    }
 } 
 
 class ItemList { 
@@ -25,33 +34,29 @@ class ItemList {
 		this.size = 0; 
 	} 
 
-	add(element) 
-	{ 
-		// creates a new node 
-		var node = new Node(element); 
-
-		// to store current node 
-		var current; 
-
-		// if list is Empty add the 
-		// element and make it head 
-		if (this.head == null) 
-			this.head = node; 
-		else { 
-			current = this.head; 
-
-			// iterate to the end of the 
-			// list 
-			while (current.next) { 
-				current = current.next; 
-			} 
-
-			// add node 
-			current.next = node; 
-		} 
-		this.size++; 
-	} 
-
+    add(element) 
+    { 
+         var current; 
+         var node = new Node(element); 
+         /* Special case for head node */
+         if (this.head == null || this.head.element.getWeight() >= element.getWeight()) 
+         { 
+            node.next = this.head; 
+            this.head = node; 
+         } 
+         else { 
+  
+            /* Locate the node before point of insertion. */
+            current = this.head; 
+  
+            while (current.next != null && 
+                   current.next.element.getWeight() < element.getWeight()) 
+                  current = current.next; 
+  
+            node.next = current.next; 
+            current.next = node; 
+         } 
+     } 
 
 	// insert element at the position index 
 	// of the list 
@@ -69,7 +74,7 @@ class ItemList {
 			// add the element to the 
 			// first index 
 			if (index == 0) { 
-				node.next = head; 
+				node.next = this.head; 
 				this.head = node; 
 			} else { 
 				curr = this.head; 
@@ -187,12 +192,18 @@ class ItemList {
 	printList() 
 	{ 
 		var curr = this.head; 
-		var str = ""; 
-		while (curr) { 
-			str += curr.element.name + " "; 
+        var str = ""; 
+        console.log("PaniC! ");
+        // console.log(curr)
+        // console.log(curr.next);
+		while (curr != null) { 
+            console.log(curr)
+            str += curr.element.print() + " "; 
+            // str += "g "
 			curr = curr.next; 
 		} 
-		console.log(str); 
+        console.log(str); 
+        return str;
 	}
 
 }

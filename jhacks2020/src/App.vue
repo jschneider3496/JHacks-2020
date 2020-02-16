@@ -10,6 +10,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 
 import {ItemList} from './backend/ItemList.js'
+import {ToDoItem} from './backend/ItemList.js'
 
 export default {
   name: 'app',
@@ -18,12 +19,13 @@ export default {
   }
 }
 
-
-
 var itemList = new ItemList();
 
-itemList.add("g",false,"g");
-console.log(itemList);
+itemList.add(new ToDoItem("h",false,"g", 10));
+itemList.add(new ToDoItem("b",false,"g", 1));
+itemList.add(new ToDoItem("d",false,"g", 130));
+// console.log("ggg")
+console.log(itemList.printList());
 
 </script>
 
